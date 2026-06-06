@@ -3,244 +3,222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111111" />
 
   <title>LuLab | Contenuti reali da laboratorio</title>
-  <meta name="description" content="LuLab crea contenuti reali da laboratorio: woodworking, restauri, resina e progetti veri raccontati con tecnica, ironia e zero recensioni finte." />
+
+  <meta
+    name="description"
+    content="LuLab crea contenuti reali da laboratorio: woodworking, restauri, resina e progetti veri raccontati con tecnica, ironia e zero recensioni finte."
+  />
 
   <meta property="og:title" content="LuLab | Contenuti reali da laboratorio" />
-  <meta property="og:description" content="Woodworking, restauri, resina e progetti veri raccontati con tecnica, ironia e zero recensioni finte." />
+  <meta
+    property="og:description"
+    content="Woodworking, restauri, resina e lavori veri da laboratorio. Tecnica, ironia e zero recensioni finte."
+  />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/og-image.jpg" />
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header class="site-header" aria-label="Navigazione principale">
+
+<body id="top">
+  <header class="site-header">
     <a class="brand" href="#top" aria-label="LuLab home">
-      <span class="brand-mark">Lu</span><span>Lab</span>
+      <img src="assets/logo.png" alt="LuLab logo" class="site-logo" />
     </a>
 
-    <button class="nav-toggle" type="button" aria-label="Apri menu" aria-expanded="false">
+    <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false">
       <span></span>
       <span></span>
     </button>
 
-    <nav class="site-nav">
-      <a href="#contenuti">Contenuti</a>
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="#video">Video</a>
       <a href="#progetti">Progetti</a>
-      <a href="#collaborazioni">Collaborazioni</a>
-      <a href="#media-kit">Media kit</a>
+      <a href="#collab">Collaborazioni</a>
       <a href="#contatti">Contatti</a>
     </nav>
   </header>
 
-  <main id="top">
-    <section class="hero section-dark">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <p class="eyebrow">Woodworking • Restauri • Resina</p>
-          <h1>Contenuti reali da laboratorio.</h1>
-          <p class="lead">
-            LuLab racconta lavori veri, errori veri e soluzioni pratiche: legno, restauri,
-            resina e progetti da laboratorio con tecnica, ironia e zero recensioni finte da scrivania.
-          </p>
-          <div class="cta-row">
-            <a class="button button-primary" href="#contenuti">Guarda i contenuti</a>
-            <a class="button button-ghost" href="#collaborazioni">Collabora con LuLab</a>
-          </div>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Woodworking • Restauri • Resina</p>
+
+        <h1>Contenuti reali da laboratorio.</h1>
+
+        <p class="hero-text">
+          LuLab racconta lavori veri, errori veri e soluzioni pratiche:
+          legno, restauri, resina e progetti da laboratorio con tecnica,
+          ironia e zero recensioni finte da scrivania.
+        </p>
+
+        <div class="hero-buttons">
+          <a class="button primary" href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener">
+            Guarda YouTube
+          </a>
+          <a class="button secondary" href="#collab">
+            Collabora con LuLab
+          </a>
         </div>
 
-        <div class="hero-card reveal delay-1" aria-label="Anteprima LuLab">
-          <div class="fake-image hero-image">
-            <div class="image-label">LABORATORIO VERO</div>
-          </div>
-          <div class="hero-card-footer">
-            <span>Real workshop content</span>
-            <span>Italy</span>
-          </div>
+        <div class="social-row" aria-label="Social LuLab">
+          <a href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.instagram.com/lulabworks/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@lulabworks" target="_blank" rel="noopener">TikTok</a>
         </div>
       </div>
     </section>
 
     <section class="section intro">
-      <div class="container split">
-        <div class="reveal">
-          <p class="eyebrow">Cos’è LuLab</p>
-          <h2>Lavori veri, non contenuti finti.</h2>
-        </div>
-        <div class="copy-block reveal delay-1">
-          <p>
-            LuLab è un progetto creator italiano nato in laboratorio. Qui utensili,
-            materiali e prodotti non vengono mostrati su una scrivania: vengono usati dentro
-            lavorazioni reali, tra tagli, restauri, finiture, resina, problemi e soluzioni.
-          </p>
-          <p>
-            Il tono è tecnico, diretto e ironico: abbastanza preciso da parlare alle aziende,
-            abbastanza umano da far seguire il processo anche a chi vuole solo vedere le cose nascere davvero.
-          </p>
-        </div>
+      <div class="section-text">
+        <p class="eyebrow">Cos’è LuLab</p>
+        <h2>Lavori veri, non contenuti finti.</h2>
+        <p>
+          LuLab è un progetto creator italiano nato in laboratorio.
+          Qui utensili, materiali e prodotti non vengono mostrati su una scrivania:
+          vengono usati dentro lavorazioni reali, tra tagli, restauri,
+          finiture, resina, problemi e soluzioni.
+        </p>
       </div>
     </section>
 
-    <section id="contenuti" class="section section-soft">
-      <div class="container">
-        <div class="section-heading reveal">
-          <p class="eyebrow">Contenuti</p>
-          <h2>Cosa trovi su LuLab</h2>
-          <p>
-            Format pensati per crescere sui social, costruire fiducia e rendere il progetto vendibile
-            a sponsor, brand e aziende del settore.
-          </p>
-        </div>
+    <section id="video" class="section cards-section">
+      <p class="eyebrow">Contenuti</p>
+      <h2>Cosa trovi su LuLab</h2>
 
-        <div class="cards four-cards">
-          <article class="card reveal">
-            <span class="card-number">01</span>
-            <h3>Restauri</h3>
-            <p>Pezzi rovinati, mobili da recuperare e trasformazioni prima/dopo.</p>
-          </article>
-          <article class="card reveal delay-1">
-            <span class="card-number">02</span>
-            <h3>Woodworking</h3>
-            <p>Progetti in legno, lavorazioni vere, materiali, errori e soluzioni.</p>
-          </article>
-          <article class="card reveal delay-2">
-            <span class="card-number">03</span>
-            <h3>Resina</h3>
-            <p>Colate, finiture, esperimenti e progetti ibridi legno/resina.</p>
-          </article>
-          <article class="card reveal delay-3">
-            <span class="card-number">04</span>
-            <h3>Workshop life</h3>
-            <p>Laboratorio, caos controllato, dettagli tecnici e problemi reali.</p>
-          </article>
-        </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Restauri</h3>
+          <p>
+            Pezzi rovinati, mobili da recuperare e trasformazioni prima/dopo.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Woodworking</h3>
+          <p>
+            Progetti in legno, lavorazioni vere, materiali, errori e soluzioni.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Resina</h3>
+          <p>
+            Colate, finiture, esperimenti e progetti ibridi legno/resina.
+          </p>
+        </article>
+      </div>
+
+      <div class="section-cta">
+        <a class="button primary" href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener">
+          Vai al canale YouTube
+        </a>
+      </div>
+    </section>
+
+    <section id="collab" class="section collab">
+      <div class="section-text">
+        <p class="eyebrow">Per aziende e brand</p>
+        <h2>Contenuti reali per prodotti usati davvero.</h2>
+
+        <p>
+          LuLab collabora con brand di utensili, abrasivi, colle, resine,
+          finiture, ferramenta, workwear e prodotti da laboratorio.
+        </p>
+
+        <p>
+          Non facciamo recensioni finte da scrivania: il prodotto entra nel processo,
+          dentro restauri, progetti in legno e lavorazioni reali.
+        </p>
+
+        <ul class="services">
+          <li>Video YouTube sponsorizzati</li>
+          <li>Reel, TikTok e Shorts</li>
+          <li>UGC per campagne social</li>
+          <li>Foto prodotto in uso</li>
+          <li>Integrazioni naturali nei progetti</li>
+        </ul>
+
+        <a class="button primary" href="mailto:lulabworks@gmail.com">
+          Proponi una collaborazione
+        </a>
       </div>
     </section>
 
     <section id="progetti" class="section projects">
-      <div class="container">
-        <div class="section-heading reveal">
-          <p class="eyebrow">Progetti</p>
-          <h2>Dal laboratorio ai contenuti.</h2>
+      <p class="eyebrow">Progetti</p>
+      <h2>Dal laboratorio ai contenuti.</h2>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-image placeholder"></div>
+          <h3>Restauri prima/dopo</h3>
           <p>
-            Ogni progetto può diventare video, short, carosello, contenuto UGC o integrazione brand.
+            Trasformazioni reali, dal pezzo rovinato al risultato finale.
           </p>
-        </div>
+        </article>
 
-        <div class="project-grid">
-          <article class="project-card reveal">
-            <div class="project-image img-restauro"><span>Prima / Dopo</span></div>
-            <div class="project-content">
-              <p class="project-kicker">Restauri</p>
-              <h3>Recuperare invece di buttare.</h3>
-              <p>Trasformazioni visive, problemi nascosti, tecniche semplici e risultati soddisfacenti.</p>
-            </div>
-          </article>
+        <article class="project-card">
+          <div class="project-image placeholder"></div>
+          <h3>Legno e resina</h3>
+          <p>
+            Progetti visivi, materiali interessanti e lavorazioni da raccontare.
+          </p>
+        </article>
 
-          <article class="project-card reveal delay-1">
-            <div class="project-image img-resina"><span>Legno + Resina</span></div>
-            <div class="project-content">
-              <p class="project-kicker">Materiali</p>
-              <h3>Progetti visivi e vendibili.</h3>
-              <p>Massello, multistrato, resina, finiture e dettagli pensati per contenuti forti.</p>
-            </div>
-          </article>
-
-          <article class="project-card reveal delay-2">
-            <div class="project-image img-workshop"><span>Workshop</span></div>
-            <div class="project-content">
-              <p class="project-kicker">Laboratorio</p>
-              <h3>Tecnica, errori e soluzioni.</h3>
-              <p>Il prodotto non viene solo mostrato: entra nel processo e viene usato davvero.</p>
-            </div>
-          </article>
-        </div>
+        <article class="project-card">
+          <div class="project-image placeholder"></div>
+          <h3>Vita da laboratorio</h3>
+          <p>
+            Tecnica, casino, dettagli, errori e soluzioni pratiche.
+          </p>
+        </article>
       </div>
     </section>
 
-    <section id="collaborazioni" class="section collab section-dark">
-      <div class="container collab-grid">
-        <div class="reveal">
-          <p class="eyebrow">Per aziende e brand</p>
-          <h2>Prodotti usati davvero, dentro lavori veri.</h2>
-          <p class="lead small-lead">
-            LuLab collabora con brand di utensili, abrasivi, colle, resine, finiture,
-            ferramenta, workwear e prodotti da laboratorio.
-          </p>
-          <p>
-            Non facciamo recensioni finte da scrivania: il prodotto entra nel processo,
-            dentro restauri, progetti in legno e lavorazioni reali.
-          </p>
-          <a class="button button-primary" href="mailto:lulabworks@gmail.com?subject=Collaborazione%20LuLab">Proponi una collaborazione</a>
-        </div>
+    <section class="section social-section">
+      <p class="eyebrow">Seguici</p>
+      <h2>LuLab sui social</h2>
 
-        <div class="services reveal delay-1">
-          <div class="service-item">
-            <h3>Video YouTube sponsorizzati</h3>
-            <p>Integrazioni naturali dentro progetti reali, non spot appiccicati.</p>
-          </div>
-          <div class="service-item">
-            <h3>Reel, TikTok e Shorts</h3>
-            <p>Contenuti verticali pensati per retention, share e uso social.</p>
-          </div>
-          <div class="service-item">
-            <h3>UGC per campagne</h3>
-            <p>Video e foto prodotto in uso, pronti per organico o advertising.</p>
-          </div>
-          <div class="service-item">
-            <h3>Foto prodotto in laboratorio</h3>
-            <p>Materiali, utensili e finiture ripresi in un contesto reale e credibile.</p>
-          </div>
-        </div>
+      <div class="social-cards">
+        <a class="social-card" href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener">
+          <span>YouTube</span>
+          <strong>@LuLabWorks</strong>
+        </a>
+
+        <a class="social-card" href="https://www.instagram.com/lulabworks/" target="_blank" rel="noopener">
+          <span>Instagram</span>
+          <strong>@lulabworks</strong>
+        </a>
+
+        <a class="social-card" href="https://www.tiktok.com/@lulabworks" target="_blank" rel="noopener">
+          <span>TikTok</span>
+          <strong>@lulabworks</strong>
+        </a>
       </div>
     </section>
 
-    <section id="media-kit" class="section media-kit">
-      <div class="container media-card reveal">
-        <div>
-          <p class="eyebrow">Media kit</p>
-          <h2>Real workshop content for brands that want their products used, not just shown.</h2>
-          <p>
-            Contenuti reali da laboratorio per brand che vogliono entrare dentro lavorazioni vere:
-            taglio, assemblaggio, carteggiatura, finitura, restauro, errore, soluzione, risultato finale.
-          </p>
-        </div>
-        <div class="media-actions">
-          <a class="button button-primary" href="mailto:lulabworks@gmail.com?subject=Richiesta%20media%20kit%20LuLab">Richiedi media kit</a>
-          <a class="button button-ghost-light" href="#contatti">Contatti</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contatti" class="section contact section-soft">
-      <div class="container contact-wrap reveal">
-        <p class="eyebrow">Contatti</p>
-        <h2>Vuoi collaborare con LuLab?</h2>
-        <p>
-          Per sponsor, UGC, contenuti brand, collaborazioni o proposte commerciali:
-        </p>
-        <a class="email-link" href="mailto:lulabworks@gmail.com">lulabworks@gmail.com</a>
-        <div class="social-links" aria-label="Social LuLab">
-          <a href="#" aria-label="YouTube LuLab">YouTube</a>
-          <a href="#" aria-label="Instagram LuLab">Instagram</a>
-          <a href="#" aria-label="TikTok LuLab">TikTok</a>
-          <a href="#" aria-label="Pinterest LuLab">Pinterest</a>
-        </div>
-      </div>
+    <section id="contatti" class="section contact">
+      <p class="eyebrow">Contatti</p>
+      <h2>Vuoi collaborare con LuLab?</h2>
+      <p>
+        Per sponsor, UGC, contenuti brand e collaborazioni:
+      </p>
+      <a class="email-link" href="mailto:lulabworks@gmail.com">
+        lulabworks@gmail.com
+      </a>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-grid">
-      <p>© <span id="year"></span> LuLab — Contenuti reali da laboratorio.</p>
-      <a href="#top">Torna su</a>
+    <p>© LuLab — Contenuti reali da laboratorio</p>
+
+    <div class="footer-socials">
+      <a href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.instagram.com/lulabworks/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@lulabworks" target="_blank" rel="noopener">TikTok</a>
     </div>
   </footer>
 
