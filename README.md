@@ -1,16 +1,21 @@
-## Hi there 👋
+# LuLab website
 
-<!--
-**lulabworks/lulabworks** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Sito statico per GitHub Pages.
 
-Here are some ideas to get you started:
+## File principali
+- `index.html`
+- `style.css`
+- `script.js`
+- `assets/favicon.svg`
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Come pubblicare su GitHub Pages
+1. Carica tutti i file nella root della repo.
+2. Vai su Settings → Pages.
+3. Source: Deploy from a branch.
+4. Branch: main, folder: /root.
+5. Salva.
+
+## Da aggiornare
+- Inserire link reali di YouTube, Instagram, TikTok e Pinterest nella sezione `social-links`.
+- Sostituire i placeholder grafici con immagini reali del laboratorio/progetti.
+- Aggiornare la mail se viene creato il dominio professionale.
