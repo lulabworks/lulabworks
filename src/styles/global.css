@@ -32,6 +32,7 @@ button, input, select, textarea { font: inherit; }
 .brand img { width: 2.65rem; height: 2.65rem; border-radius: 0.3rem; object-fit: contain; }
 .site-nav { display: flex; align-items: center; gap: clamp(0.8rem, 2.5vw, 1.8rem); color: var(--muted); font-size: 0.95rem; }
 .site-nav a:hover, .site-nav a:focus-visible { color: var(--brand); }
+.nav-toggle { display: none; }
 .nav-cta { padding: 0.65rem 1rem; border-radius: 999px; background: var(--brand); color: var(--bg) !important; font-weight: 700; }
 .nav-cta:hover { background: var(--brand-dark); }
 
@@ -106,9 +107,27 @@ textarea.input { min-height: 9rem; resize: vertical; }
 .copyright { grid-column: 1 / -1; font-size: 0.85rem; }
 
 @media (max-width: 800px) {
-  .site-header { position: relative; align-items: flex-start; flex-direction: column; gap: 0.8rem; }
-  .site-nav { width: 100%; overflow-x: auto; padding-bottom: 0.2rem; }
-  .site-nav a { flex: 0 0 auto; }
+  .site-header {
+    position: relative; align-items: center; flex-direction: row; flex-wrap: wrap; gap: 0.55rem;
+    padding: 0.55rem clamp(1rem, 4vw, 1.5rem);
+  }
+  .nav-toggle:not([hidden]) {
+    display: grid; width: 2.75rem; height: 2.75rem; flex: 0 0 auto; place-items: center;
+    border: 1px solid var(--line); border-radius: 0.8rem; background: var(--surface); color: var(--brand);
+    cursor: pointer;
+  }
+  .nav-toggle svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-width: 1.8; }
+  .nav-toggle .close-icon { display: none; }
+  .nav-toggle[aria-expanded="true"] .menu-icon { display: none; }
+  .nav-toggle[aria-expanded="true"] .close-icon { display: block; }
+  .site-nav {
+    display: flex; width: 100%; flex: 1 0 100%; flex-direction: column; align-items: stretch; gap: 0;
+    margin-top: 0.25rem; padding-top: 0.5rem; border-top: 1px solid var(--line);
+  }
+  .site-nav[hidden] { display: none; }
+  .site-nav a:not(.nav-cta) { display: flex; min-height: 2.75rem; align-items: center; padding: 0.5rem 0.65rem; border-radius: 0.55rem; }
+  .site-nav a:not(.nav-cta):hover { background: var(--brand-soft); }
+  .site-nav .nav-cta { display: flex; width: 100%; min-height: 3rem; align-items: center; justify-content: center; margin-top: 0.35rem; }
   .grid, .service-grid { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: 1fr; }
   .site-footer { grid-template-columns: 1fr; }

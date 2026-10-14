@@ -47,7 +47,22 @@ const socialImage = new URL(image, Astro.site)
         <img src={sitePath('/brand/logo-lulab.png')} width="64" height="64" alt="" />
         <span>LuLab</span>
       </a>
-      <nav class="site-nav" aria-label="Navigazione principale">
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label="Apri il menu"
+        hidden
+      >
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+        <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigazione principale">
         <a href={sitePath('/servizi/')}>Servizi</a>
         <a href={sitePath('/collezione/')}>Collezione</a>
         <a href={sitePath('/progetti/')}>Progetti</a>
@@ -67,5 +82,59 @@ const socialImage = new URL(image, Astro.site)
       </div>
       <p class="copyright">© {new Date().getFullYear()} LuLab</p>
     </footer>
+    <script>
+      const mobileMenuQuery = window.matchMedia('(max-width: 800px)')
+      const menuButton = document.querySelector<HTMLButtonElement>('.nav-toggle')
+      const siteNav = document.querySelector<HTMLElement>('#site-nav')
+
+      if (menuButton && siteNav) {
+        const closeMenu = (restoreFocus = false) => {
+          menuButton.setAttribute('aria-expanded', 'false')
+          menuButton.setAttribute('aria-label', 'Apri il menu')
+          siteNav.hidden = true
+          if (restoreFocus) menuButton.focus()
+        }
+
+        const syncMenuForViewport = () => {
+          const isMobile = mobileMenuQuery.matches
+          menuButton.hidden = !isMobile
+          menuButton.setAttribute('aria-expanded', 'false')
+          menuButton.setAttribute('aria-label', 'Apri il menu')
+          siteNav.hidden = isMobile
+        }
+
+        menuButton.addEventListener('click', () => {
+          const isExpanded = menuButton.getAttribute('aria-expanded') === 'true'
+          if (isExpanded) {
+            closeMenu()
+            return
+          }
+
+          siteNav.hidden = false
+          menuButton.setAttribute('aria-expanded', 'true')
+          menuButton.setAttribute('aria-label', 'Chiudi il menu')
+        })
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && mobileMenuQuery.matches && !siteNav.hidden) {
+            closeMenu(true)
+          }
+        })
+
+        document.addEventListener('pointerdown', (event) => {
+          const target = event.target as Node
+          if (mobileMenuQuery.matches && !siteNav.hidden && !siteNav.contains(target) && !menuButton.contains(target)) {
+            closeMenu()
+          }
+        })
+
+        siteNav.addEventListener('click', (event) => {
+          if ((event.target as Element).closest('a') && mobileMenuQuery.matches) closeMenu()
+        })
+
+        mobileMenuQuery.addEventListener('change', syncMenuForViewport)
+        syncMenuForViewport()
+      }
+    </script>
   </body>
 </html>
