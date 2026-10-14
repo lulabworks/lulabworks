@@ -1,21 +1,24 @@
-# LuLab website
+# Sito pubblico LuLab
 
-Sito statico per GitHub Pages.
+Sito statico Astro pubblicato con GitHub Pages. Collezione e Progetti vengono letti da Supabase durante la build: soltanto contenuti con stato `pubblicato` e immagini nel bucket `site-public` entrano nelle pagine generate.
 
-## File principali
-- `index.html`
-- `style.css`
-- `script.js`
-- `assets/favicon.svg`
+## Configurazione locale
 
-## Come pubblicare su GitHub Pages
-1. Carica tutti i file nella root della repo.
-2. Vai su Settings → Pages.
-3. Source: Deploy from a branch.
-4. Branch: main, folder: /root.
-5. Salva.
+```sh
+cp .env.example .env.local
+pnpm install
+pnpm dev
+```
 
-## Da aggiornare
-- Inserire link reali di YouTube, Instagram, TikTok e Pinterest nella sezione `social-links`.
-- Sostituire i placeholder grafici con immagini reali del laboratorio/progetti.
-- Aggiornare la mail se viene creato il dominio professionale.
+Variabili necessarie:
+
+- `PUBLIC_SUPABASE_URL`
+- `PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+La publishable key è usata esclusivamente con le policy RLS anonime. Non usare mai chiavi `service_role` o secret key nel sito o nei repository secrets della build.
+
+## Pubblicazione
+
+Il workflow `.github/workflows/deploy-pages.yml` esegue check, test e build e pubblica `dist` su GitHub Pages. Oltre ai push e agli avvii manuali, una build pianificata ogni cinque minuti recepisce pubblicazioni e ritiri effettuati da LuLab Desk.
+
+Il modulo richieste invia dati e allegati alla Edge Function Supabase `submit-inquiry`: nessun inserimento anonimo diretto è consentito dalle tabelle o dallo Storage.

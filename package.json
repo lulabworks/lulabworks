@@ -1,0 +1,19 @@
+{
+  "name": "lulab-public-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "test": "node scripts/verify-public-site.mjs",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.14.1",
+    "typescript": "^5.9.2"
+  }
+}

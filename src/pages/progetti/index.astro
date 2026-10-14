@@ -1,0 +1,18 @@
+---
+import ContentCard from '../../components/ContentCard.astro'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { featuredFirst, getPortfolioProjects } from '../../lib/public-content'
+
+const projects = featuredFirst(await getPortfolioProjects())
+---
+
+<BaseLayout title="Progetti | LuLab" description="Restauri e lavori realizzati dal laboratorio LuLab.">
+  <section class="detail-hero">
+    <div class="container">
+      <p class="eyebrow">Portfolio</p>
+      <h1 class="page-title">Lavori, interventi e trasformazioni.</h1>
+      <p class="lead">Una raccolta di progetti pubblicati dal laboratorio, senza dati dei clienti o informazioni private delle commesse.</p>
+      {projects.length > 0 ? <div class="grid">{projects.map((project) => <ContentCard href={`/progetti/${project.slug}/`} title={project.title} description={project.summary} eyebrow={project.category} image={project.images[0]} />)}</div> : <div class="empty-state">Non ci sono ancora progetti pubblicati.</div>}
+    </div>
+  </section>
+</BaseLayout>

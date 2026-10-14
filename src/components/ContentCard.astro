@@ -1,0 +1,29 @@
+---
+import { publicImageUrl, type PublicImage } from '../lib/public-content'
+
+interface Props {
+  href: string
+  title: string
+  description: string
+  eyebrow?: string
+  badge?: string
+  image?: PublicImage
+}
+
+const { href, title, description, eyebrow, badge, image } = Astro.props
+---
+
+<article class="content-card">
+  <a href={href} aria-label={`Apri ${title}`}>
+    {image ? <img src={publicImageUrl(image.storage_path)} alt={image.alt_text} width={image.width ?? 1200} height={image.height ?? 900} loading="lazy" /> : <div class="image-empty" aria-hidden="true" />}
+    <div class="content-card-body">
+      <div class="card-meta">
+        {eyebrow && <span>{eyebrow}</span>}
+        {badge && <span class="badge">{badge}</span>}
+      </div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <span class="text-link">Scopri di più <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

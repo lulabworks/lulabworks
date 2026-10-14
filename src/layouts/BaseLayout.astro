@@ -1,0 +1,61 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const {
+  title = 'LuLab | Restauro, recupero e lavori artigianali nel Salento',
+  description = 'LuLab restaura mobili e infissi, recupera arredi e realizza trattamenti antitarlo nel Salento.',
+  image = '/assets/logo.png'
+} = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const socialImage = new URL(image, Astro.site)
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#111111" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title}</title>
+  </head>
+  <body id="top">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="LuLab — home">
+        <img src="/assets/logo.png" width="64" height="64" alt="" />
+        <span>LuLab</span>
+      </a>
+      <nav class="site-nav" aria-label="Navigazione principale">
+        <a href="/servizi/">Servizi</a>
+        <a href="/collezione/">Collezione</a>
+        <a href="/progetti/">Progetti</a>
+        <a class="nav-cta" href="/richiesta/">Richiedi un preventivo</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">
+      <div><strong>LuLab</strong><p>Restauro, recupero e lavorazioni artigianali nel Salento.</p></div>
+      <div class="footer-links">
+        <a href="mailto:lulabworks@gmail.com">lulabworks@gmail.com</a>
+        <a href="https://www.instagram.com/lulabworks/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.youtube.com/@LuLabWorks" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </div>
+      <p class="copyright">© {new Date().getFullYear()} LuLab</p>
+    </footer>
+  </body>
+</html>

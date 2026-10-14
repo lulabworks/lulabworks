@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL?.replace(/\/$/, '')
+const publishableKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY
+const functionUrl = `${supabaseUrl}/functions/v1/submit-inquiry`
+---
+
+<BaseLayout title="Richiedi un preventivo | LuLab" description="Invia una richiesta a LuLab e allega fotografie del mobile, dell’infisso o dell’oggetto da valutare.">
+  <section class="detail-hero">
+    <div class="narrow">
+      <p class="eyebrow">Contatta il laboratorio</p>
+      <h1 class="page-title">Raccontaci cosa vuoi recuperare.</h1>
+      <p class="lead">Compila il modulo con i dettagli utili. Puoi allegare fino a tre fotografie; i file restano privati e sono visibili soltanto agli operatori autorizzati di LuLab.</p>
+
+      <form id="inquiry-form" class="form" data-function-url={functionUrl} data-api-key={publishableKey} enctype="multipart/form-data">
+        <input type="hidden" name="form_started_at" value="" />
+        <input type="hidden" name="source_page" value={Astro.url.href} />
+        <div class="honeypot" aria-hidden="true"><label>Non compilare questo campo <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+        <div class="field"><label for="request_type">Tipo di richiesta</label><select class="input" id="request_type" name="request_type" required><option value="Restauro mobili">Restauro mobili</option><option value="Restauro infissi">Restauro infissi</option><option value="Trattamento antitarlo">Trattamento antitarlo</option><option value="Ritiro e recupero">Ritiro e recupero</option><option value="Informazioni Collezione">Informazioni sulla Collezione</option><option value="Altro">Altro</option></select></div>
+        <div class="field"><label for="subject">Oggetto o riferimento <span aria-hidden="true">(facoltativo)</span></label><input class="input" id="subject" name="subject" maxlength="160" autocomplete="off" /></div>
+        <div class="field"><label for="customer_name">Nome e cognome</label><input class="input" id="customer_name" name="customer_name" required minlength="2" maxlength="160" autocomplete="name" /></div>
+        <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" maxlength="320" autocomplete="email" /></div>
+        <div class="field"><label for="phone">Telefono</label><input class="input" id="phone" name="phone" type="tel" maxlength="40" autocomplete="tel" /><small>Inserisci almeno un recapito tra email e telefono.</small></div>
+        <div class="field"><label for="message">Descrizione</label><textarea class="input" id="message" name="message" required minlength="10" maxlength="6000" placeholder="Descrivi l’oggetto, le condizioni e il tipo di intervento che immagini."></textarea></div>
+        <div class="field"><label for="files">Fotografie <span aria-hidden="true">(facoltative)</span></label><input class="input" id="files" name="files" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple /><small>Massimo 3 immagini, 15 MB ciascuna. Formati JPG, PNG, WebP, HEIC o HEIF.</small></div>
+        <label class="check"><input type="checkbox" name="privacy_consent" value="true" required /><span>Acconsento al trattamento dei dati inviati per ricevere risposta alla mia richiesta.</span></label>
+        <button class="button button-primary" type="submit">Invia richiesta</button>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const form = document.querySelector<HTMLFormElement>('#inquiry-form')
+    const status = document.querySelector<HTMLParagraphElement>('#form-status')
+    if (form && status) {
+      const startedInput = form.elements.namedItem('form_started_at') as HTMLInputElement
+      startedInput.value = String(Date.now())
+      const params = new URLSearchParams(window.location.search)
+      const requestType = params.get('tipo')
+      const subject = params.get('oggetto')
+      if (requestType) (form.elements.namedItem('request_type') as HTMLSelectElement).value = requestType
+      if (subject) (form.elements.namedItem('subject') as HTMLInputElement).value = subject
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault()
+        status.dataset.tone = ''
+        status.textContent = 'Invio in corso…'
+        const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')
+        if (submit) submit.disabled = true
+        try {
+          const files = (form.elements.namedItem('files') as HTMLInputElement).files
+          if (files && files.length > 3) throw new Error('Puoi allegare al massimo tre fotografie.')
+          if (files && Array.from(files).some((file) => file.size > 15 * 1024 * 1024)) throw new Error('Una fotografia supera il limite di 15 MB.')
+          const response = await fetch(form.dataset.functionUrl ?? '', {
+            method: 'POST',
+            headers: {
+              apikey: form.dataset.apiKey ?? '',
+              Authorization: `Bearer ${form.dataset.apiKey ?? ''}`
+            },
+            body: new FormData(form)
+          })
+          const result = await response.json().catch(() => ({}))
+          if (!response.ok) throw new Error(result.error ?? 'Non è stato possibile inviare la richiesta.')
+          status.dataset.tone = 'success'
+          status.textContent = `Richiesta inviata. Il riferimento è ${result.reference_code}.`
+          form.reset()
+          startedInput.value = String(Date.now())
+        } catch (error) {
+          status.dataset.tone = 'error'
+          status.textContent = error instanceof Error ? error.message : 'Non è stato possibile inviare la richiesta.'
+        } finally {
+          if (submit) submit.disabled = false
+        }
+      })
+    }
+  </script>
+</BaseLayout>
