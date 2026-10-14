@@ -50,6 +50,12 @@ export type PortfolioProject = {
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL?.replace(/\/$/, '')
 const publishableKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY
 
+export function sitePath(path = '/') {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+  const normalized = path.startsWith('/') ? path : `/${path}`
+  return `${base}${normalized}`
+}
+
 function assertConfiguration() {
   if (!supabaseUrl || !publishableKey) {
     throw new Error('Configura PUBLIC_SUPABASE_URL e PUBLIC_SUPABASE_PUBLISHABLE_KEY per compilare il sito.')

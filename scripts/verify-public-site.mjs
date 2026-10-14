@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 const publicContent = readFileSync(new URL('../src/lib/public-content.ts', import.meta.url), 'utf8')
 const form = readFileSync(new URL('../src/pages/richiesta/index.astro', import.meta.url), 'utf8')
 const workflow = readFileSync(new URL('../.github/workflows/deploy-pages.yml', import.meta.url), 'utf8')
+const astroConfig = readFileSync(new URL('../astro.config.mjs', import.meta.url), 'utf8')
 
 function assert(condition, message) {
   if (!condition) throw new Error(message)
@@ -16,8 +17,10 @@ assert(/storage_bucket: 'eq\.site-public'/.test(publicContent), 'Le query devono
 assert(/functions\/v1\/submit-inquiry/.test(form), 'Il modulo deve passare dalla Edge Function.')
 assert(/name="website"/.test(form) && /form_started_at/.test(form), 'Mancano le protezioni antispam di base.')
 assert(/schedule:/.test(workflow) && /cron:/.test(workflow), 'Manca la rigenerazione automatica pianificata.')
+assert(/base: '\/lulabworks'/.test(astroConfig) && /sitePath/.test(publicContent), 'Manca il base path GitHub Pages del repository pubblico.')
 
 console.log('Query pubbliche senza prezzi o fonti operative: OK')
 console.log('Contenuti e immagini filtrati per pubblicazione: OK')
 console.log('Richieste instradate alla Edge Function: OK')
 console.log('Rigenerazione automatica pianificata: OK')
+console.log('Base path GitHub Pages /lulabworks/: OK')

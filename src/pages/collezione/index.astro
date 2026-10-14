@@ -1,7 +1,7 @@
 ---
 import ContentCard from '../../components/ContentCard.astro'
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import { availabilityLabels, featuredFirst, getCollectionItems } from '../../lib/public-content'
+import { availabilityLabels, featuredFirst, getCollectionItems, sitePath } from '../../lib/public-content'
 
 const items = featuredFirst(await getCollectionItems())
 ---
@@ -12,7 +12,7 @@ const items = featuredFirst(await getCollectionItems())
       <p class="eyebrow">Collezione LuLab</p>
       <h1 class="page-title">Oggetti recuperati con una nuova storia.</h1>
       <p class="lead">Una selezione di mobili e arredi scelti, recuperati e valorizzati nel laboratorio LuLab. I prezzi non sono pubblicati: puoi contattarci per informazioni.</p>
-      {items.length > 0 ? <div class="grid">{items.map((item) => <ContentCard href={`/collezione/${item.slug}/`} title={item.title} description={item.description} badge={availabilityLabels[item.availability]} image={item.images[0]} />)}</div> : <div class="empty-state">Non ci sono ancora oggetti pubblicati nella Collezione.</div>}
+      {items.length > 0 ? <div class="grid">{items.map((item) => <ContentCard href={sitePath(`/collezione/${item.slug}/`)} title={item.title} description={item.description} badge={availabilityLabels[item.availability]} image={item.images[0]} />)}</div> : <div class="empty-state">Non ci sono ancora oggetti pubblicati nella Collezione.</div>}
     </div>
   </section>
 </BaseLayout>

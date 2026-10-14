@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import { sitePath } from '../../lib/public-content'
 ---
 
 <BaseLayout title="Servizi | LuLab" description="Restauro mobili e infissi, trattamenti antitarlo e recupero di arredi nel Salento.">
@@ -14,7 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
         <article class="service-card"><h2>Trattamenti antitarlo</h2><p>Gestione del ritiro, del trattamento e della riconsegna tramite collaboratore specializzato.</p></article>
         <article class="service-card"><h2>Ritiro e recupero</h2><p>Valutazione e recupero di mobili e oggetti che possono trovare una nuova vita.</p></article>
       </div>
-      <div class="actions"><a class="button button-primary" href="/richiesta/">Richiedi una valutazione</a></div>
+      <div class="actions"><a class="button button-primary" href={sitePath('/richiesta/')}>Richiedi una valutazione</a></div>
     </div>
   </section>
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import { getPortfolioProjects, publicImageUrl, type PortfolioProject } from '../../lib/public-content'
+import { getPortfolioProjects, publicImageUrl, sitePath, type PortfolioProject } from '../../lib/public-content'
 
 export async function getStaticPaths() {
   const projects = await getPortfolioProjects()
@@ -22,6 +22,6 @@ const kindLabels = { prima: 'Prima', durante: 'Durante', dopo: 'Dopo' }
     </div>
   </section>
   {cover && <img class="detail-cover" src={publicImageUrl(cover.storage_path)} alt={cover.alt_text} width={cover.width ?? 1400} height={cover.height ?? 1000} />}
-  <section class="section"><div class="narrow"><p class="detail-copy">{project.description}</p><div class="actions"><a class="button button-primary" href={`/richiesta/?tipo=Richiesta%20simile&oggetto=${encodeURIComponent(project.title)}`}>Parlaci del tuo progetto</a></div></div></section>
+  <section class="section"><div class="narrow"><p class="detail-copy">{project.description}</p><div class="actions"><a class="button button-primary" href={`${sitePath('/richiesta/')}?tipo=Richiesta%20simile&oggetto=${encodeURIComponent(project.title)}`}>Parlaci del tuo progetto</a></div></div></section>
   {project.images.length > 1 && <section class="section"><div class="container gallery">{project.images.slice(1).map((image) => <figure><img src={publicImageUrl(image.storage_path)} alt={image.alt_text} width={image.width ?? 1200} height={image.height ?? 900} loading="lazy" /><figcaption>{image.caption ?? kindLabels[image.image_kind]}</figcaption></figure>)}</div></section>}
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import { sitePath } from '../lib/public-content'
 
 interface Props {
   title?: string
@@ -10,7 +11,7 @@ interface Props {
 const {
   title = 'LuLab | Restauro, recupero e lavori artigianali nel Salento',
   description = 'LuLab restaura mobili e infissi, recupera arredi e realizza trattamenti antitarlo nel Salento.',
-  image = '/assets/logo.png'
+  image = sitePath('/assets/logo.png')
 } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const socialImage = new URL(image, Astro.site)
@@ -24,7 +25,7 @@ const socialImage = new URL(image, Astro.site)
     <meta name="description" content={description} />
     <meta name="theme-color" content="#111111" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/assets/favicon.svg" />
+    <link rel="icon" href={sitePath('/assets/favicon.svg')} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
@@ -36,15 +37,15 @@ const socialImage = new URL(image, Astro.site)
   </head>
   <body id="top">
     <header class="site-header">
-      <a class="brand" href="/" aria-label="LuLab — home">
-        <img src="/assets/logo.png" width="64" height="64" alt="" />
+      <a class="brand" href={sitePath('/')} aria-label="LuLab — home">
+        <img src={sitePath('/assets/logo.png')} width="64" height="64" alt="" />
         <span>LuLab</span>
       </a>
       <nav class="site-nav" aria-label="Navigazione principale">
-        <a href="/servizi/">Servizi</a>
-        <a href="/collezione/">Collezione</a>
-        <a href="/progetti/">Progetti</a>
-        <a class="nav-cta" href="/richiesta/">Richiedi un preventivo</a>
+        <a href={sitePath('/servizi/')}>Servizi</a>
+        <a href={sitePath('/collezione/')}>Collezione</a>
+        <a href={sitePath('/progetti/')}>Progetti</a>
+        <a class="nav-cta" href={sitePath('/richiesta/')}>Richiedi un preventivo</a>
       </nav>
     </header>
     <main><slot /></main>

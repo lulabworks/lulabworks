@@ -1,7 +1,7 @@
 ---
 import ContentCard from '../components/ContentCard.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
-import { availabilityLabels, featuredFirst, getCollectionItems, getPortfolioProjects } from '../lib/public-content'
+import { availabilityLabels, featuredFirst, getCollectionItems, getPortfolioProjects, sitePath } from '../lib/public-content'
 
 const [collection, projects] = await Promise.all([getCollectionItems(), getPortfolioProjects()])
 const featuredCollection = featuredFirst(collection).filter((item) => item.is_featured).slice(0, 3)
@@ -15,8 +15,8 @@ const featuredProjects = featuredFirst(projects).filter((item) => item.is_featur
       <h1>Oggetti e spazi che meritano una seconda vita.</h1>
       <p class="hero-text">LuLab si occupa di restauro di mobili e infissi, recupero di arredi e trattamenti antitarlo, con lavorazioni curate una alla volta.</p>
       <div class="actions">
-        <a class="button button-primary" href="/richiesta/">Raccontaci il tuo progetto</a>
-        <a class="button button-secondary" href="/servizi/">Scopri i servizi</a>
+        <a class="button button-primary" href={sitePath('/richiesta/')}>Raccontaci il tuo progetto</a>
+        <a class="button button-secondary" href={sitePath('/servizi/')}>Scopri i servizi</a>
       </div>
     </div>
   </section>
@@ -27,12 +27,12 @@ const featuredProjects = featuredFirst(projects).filter((item) => item.is_featur
       <h2 class="section-title">Mobili recuperati, restaurati e pronti a ricominciare.</h2>
       {featuredCollection.length > 0 ? (
         <div class="grid">
-          {featuredCollection.map((item) => <ContentCard href={`/collezione/${item.slug}/`} title={item.title} description={item.description} badge={availabilityLabels[item.availability]} image={item.images[0]} />)}
+          {featuredCollection.map((item) => <ContentCard href={sitePath(`/collezione/${item.slug}/`)} title={item.title} description={item.description} badge={availabilityLabels[item.availability]} image={item.images[0]} />)}
         </div>
       ) : (
         <div class="empty-state">La Collezione LuLab sarà pubblicata qui. Nessun oggetto è attualmente in evidenza.</div>
       )}
-      <div class="actions"><a class="button button-secondary" href="/collezione/">Vedi tutta la Collezione</a></div>
+      <div class="actions"><a class="button button-secondary" href={sitePath('/collezione/')}>Vedi tutta la Collezione</a></div>
     </div>
   </section>
 
@@ -42,12 +42,12 @@ const featuredProjects = featuredFirst(projects).filter((item) => item.is_featur
       <h2 class="section-title">Restauri raccontati attraverso interventi e dettagli.</h2>
       {featuredProjects.length > 0 ? (
         <div class="grid">
-          {featuredProjects.map((project) => <ContentCard href={`/progetti/${project.slug}/`} title={project.title} description={project.summary} eyebrow={project.category} image={project.images[0]} />)}
+          {featuredProjects.map((project) => <ContentCard href={sitePath(`/progetti/${project.slug}/`)} title={project.title} description={project.summary} eyebrow={project.category} image={project.images[0]} />)}
         </div>
       ) : (
         <div class="empty-state">I progetti scelti dal laboratorio compariranno qui quando saranno pubblicati.</div>
       )}
-      <div class="actions"><a class="button button-secondary" href="/progetti/">Esplora i progetti</a></div>
+      <div class="actions"><a class="button button-secondary" href={sitePath('/progetti/')}>Esplora i progetti</a></div>
     </div>
   </section>
 
@@ -56,7 +56,7 @@ const featuredProjects = featuredFirst(projects).filter((item) => item.is_featur
       <p class="eyebrow">Contatti</p>
       <h2 class="section-title">Hai un mobile, un infisso o un oggetto da recuperare?</h2>
       <p class="lead">Descrivi ciò che ti serve e, se vuoi, allega alcune fotografie. La richiesta arriverà direttamente nel gestionale LuLab Desk.</p>
-      <div class="actions"><a class="button button-primary" href="/richiesta/">Invia una richiesta</a></div>
+      <div class="actions"><a class="button button-primary" href={sitePath('/richiesta/')}>Invia una richiesta</a></div>
     </div>
   </section>
 </BaseLayout>
