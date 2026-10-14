@@ -56,10 +56,9 @@ const socialImage = new URL(image, Astro.site)
         hidden
       >
         <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M4 7h16M4 12h16M4 17h16" />
-        </svg>
-        <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="m6 6 12 12M18 6 6 18" />
+          <path class="menu-line menu-line-top" d="M4 7h16" />
+          <path class="menu-line menu-line-middle" d="M4 12h16" />
+          <path class="menu-line menu-line-bottom" d="M4 17h16" />
         </svg>
       </button>
       <nav class="site-nav" id="site-nav" aria-label="Navigazione principale">
@@ -84,23 +83,56 @@ const socialImage = new URL(image, Astro.site)
     </footer>
     <script>
       const mobileMenuQuery = window.matchMedia('(max-width: 800px)')
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
       const menuButton = document.querySelector<HTMLButtonElement>('.nav-toggle')
       const siteNav = document.querySelector<HTMLElement>('#site-nav')
 
       if (menuButton && siteNav) {
+        let closeTimer: number | undefined
+        let openFrame: number | undefined
+
+        const cancelPendingClose = () => {
+          if (closeTimer !== undefined) window.clearTimeout(closeTimer)
+          closeTimer = undefined
+        }
+
+        const cancelPendingOpen = () => {
+          if (openFrame !== undefined) window.cancelAnimationFrame(openFrame)
+          openFrame = undefined
+        }
+
         const closeMenu = (restoreFocus = false) => {
+          cancelPendingOpen()
+          cancelPendingClose()
           menuButton.setAttribute('aria-expanded', 'false')
           menuButton.setAttribute('aria-label', 'Apri il menu')
-          siteNav.hidden = true
+          siteNav.inert = true
+          siteNav.setAttribute('aria-hidden', 'true')
+          siteNav.classList.remove('is-open')
           if (restoreFocus) menuButton.focus()
+
+          const finishClosing = () => {
+            closeTimer = undefined
+            if (menuButton.getAttribute('aria-expanded') === 'false') siteNav.hidden = true
+          }
+
+          if (reducedMotionQuery.matches) finishClosing()
+          else closeTimer = window.setTimeout(finishClosing, 270)
         }
 
         const syncMenuForViewport = () => {
+          cancelPendingOpen()
+          cancelPendingClose()
+          document.documentElement.classList.add('has-mobile-menu')
           const isMobile = mobileMenuQuery.matches
           menuButton.hidden = !isMobile
           menuButton.setAttribute('aria-expanded', 'false')
           menuButton.setAttribute('aria-label', 'Apri il menu')
           siteNav.hidden = isMobile
+          siteNav.inert = isMobile
+          if (isMobile) siteNav.setAttribute('aria-hidden', 'true')
+          else siteNav.removeAttribute('aria-hidden')
+          siteNav.classList.remove('is-open')
         }
 
         menuButton.addEventListener('click', () => {
@@ -110,26 +142,36 @@ const socialImage = new URL(image, Astro.site)
             return
           }
 
+          cancelPendingOpen()
+          cancelPendingClose()
           siteNav.hidden = false
+          siteNav.inert = false
+          siteNav.removeAttribute('aria-hidden')
           menuButton.setAttribute('aria-expanded', 'true')
           menuButton.setAttribute('aria-label', 'Chiudi il menu')
+          // Flush the collapsed state before starting the CSS transition.
+          void siteNav.offsetHeight
+          openFrame = window.requestAnimationFrame(() => {
+            openFrame = undefined
+            if (menuButton.getAttribute('aria-expanded') === 'true') siteNav.classList.add('is-open')
+          })
         })
 
         document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && mobileMenuQuery.matches && !siteNav.hidden) {
+          if (event.key === 'Escape' && mobileMenuQuery.matches && menuButton.getAttribute('aria-expanded') === 'true') {
             closeMenu(true)
           }
         })
 
         document.addEventListener('pointerdown', (event) => {
           const target = event.target as Node
-          if (mobileMenuQuery.matches && !siteNav.hidden && !siteNav.contains(target) && !menuButton.contains(target)) {
+          if (mobileMenuQuery.matches && menuButton.getAttribute('aria-expanded') === 'true' && !siteNav.contains(target) && !menuButton.contains(target)) {
             closeMenu()
           }
         })
 
         siteNav.addEventListener('click', (event) => {
-          if ((event.target as Element).closest('a') && mobileMenuQuery.matches) closeMenu()
+          if ((event.target as Element).closest('a') && mobileMenuQuery.matches && menuButton.getAttribute('aria-expanded') === 'true') closeMenu()
         })
 
         mobileMenuQuery.addEventListener('change', syncMenuForViewport)

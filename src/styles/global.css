@@ -114,23 +114,54 @@ textarea.input { min-height: 9rem; resize: vertical; }
   .nav-toggle:not([hidden]) {
     display: grid; width: 2.75rem; height: 2.75rem; flex: 0 0 auto; place-items: center;
     border: 1px solid var(--line); border-radius: 0.8rem; background: var(--surface); color: var(--brand);
-    cursor: pointer;
+    cursor: pointer; transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
   }
-  .nav-toggle svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-width: 1.8; }
-  .nav-toggle .close-icon { display: none; }
-  .nav-toggle[aria-expanded="true"] .menu-icon { display: none; }
-  .nav-toggle[aria-expanded="true"] .close-icon { display: block; }
+  .nav-toggle:active { transform: scale(0.96); background: var(--brand-soft); }
+  .nav-toggle svg { width: 1.3rem; height: 1.3rem; overflow: visible; fill: none; stroke: currentColor; stroke-linecap: round; stroke-width: 1.8; }
+  .menu-line {
+    transform-box: fill-box; transform-origin: center;
+    transition: transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 150ms ease;
+  }
+  .nav-toggle[aria-expanded="true"] .menu-line-top { transform: translateY(5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .menu-line-middle { transform: scaleX(0.25); opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .menu-line-bottom { transform: translateY(-5px) rotate(-45deg); }
   .site-nav {
     display: flex; width: 100%; flex: 1 0 100%; flex-direction: column; align-items: stretch; gap: 0;
     margin-top: 0.25rem; padding-top: 0.5rem; border-top: 1px solid var(--line);
   }
-  .site-nav[hidden] { display: none; }
+  html.has-mobile-menu .site-nav {
+    max-height: 0; overflow: hidden; margin-top: 0; padding-top: 0; border-top-color: transparent;
+    opacity: 0; transform: translateY(-0.45rem); pointer-events: none;
+    transition:
+      max-height 250ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      margin-top 250ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      padding-top 250ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 250ms ease,
+      opacity 180ms ease,
+      transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  html.has-mobile-menu .site-nav.is-open { max-height: 18rem; margin-top: 0.25rem; padding-top: 0.5rem; border-top-color: var(--line); opacity: 1; transform: translateY(0); pointer-events: auto; }
+  html.has-mobile-menu .site-nav[hidden] { display: none; }
+  html.has-mobile-menu .site-nav a { opacity: 0; transform: translateY(-0.3rem); transition: opacity 180ms ease, transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+  html.has-mobile-menu .site-nav.is-open a { opacity: 1; transform: translateY(0); }
+  html.has-mobile-menu .site-nav.is-open a:nth-child(1) { transition-delay: 20ms; }
+  html.has-mobile-menu .site-nav.is-open a:nth-child(2) { transition-delay: 38ms; }
+  html.has-mobile-menu .site-nav.is-open a:nth-child(3) { transition-delay: 56ms; }
+  html.has-mobile-menu .site-nav.is-open a:nth-child(4) { transition-delay: 74ms; }
   .site-nav a:not(.nav-cta) { display: flex; min-height: 2.75rem; align-items: center; padding: 0.5rem 0.65rem; border-radius: 0.55rem; }
   .site-nav a:not(.nav-cta):hover { background: var(--brand-soft); }
-  .site-nav .nav-cta { display: flex; width: 100%; min-height: 3rem; align-items: center; justify-content: center; margin-top: 0.35rem; }
+  .site-nav .nav-cta { display: flex; width: 100%; min-height: 3rem; align-items: center; justify-content: center; margin-top: 0.35rem; transition: opacity 180ms ease, transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 150ms ease; }
+  .site-nav .nav-cta:active { filter: brightness(0.94); }
   .grid, .service-grid { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: 1fr; }
   .site-footer { grid-template-columns: 1fr; }
   .footer-links { justify-content: flex-start; }
   .copyright { grid-column: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle, .menu-line, .site-nav, .site-nav a {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
 }
