@@ -22,3 +22,5 @@ La publishable key è usata esclusivamente con le policy RLS anonime. Non usare 
 Il workflow `.github/workflows/deploy-pages.yml` esegue check, test e build e pubblica `dist` su GitHub Pages. Oltre ai push e agli avvii manuali, una build pianificata ogni cinque minuti recepisce pubblicazioni e ritiri effettuati da LuLab Desk.
 
 Il modulo richieste invia dati e allegati alla Edge Function Supabase `submit-inquiry`: nessun inserimento anonimo diretto è consentito dalle tabelle o dallo Storage.
+
+Il marchio ufficiale è conservato in `public/brand/logo-lulab.png`; favicon, Apple Touch Icon, icone del manifest e immagine Open Graph sono generate a partire da questo file.

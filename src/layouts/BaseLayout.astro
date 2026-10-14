@@ -11,7 +11,7 @@ interface Props {
 const {
   title = 'LuLab | Restauro, recupero e lavori artigianali nel Salento',
   description = 'LuLab restaura mobili e infissi, recupera arredi e realizza trattamenti antitarlo nel Salento.',
-  image = sitePath('/assets/logo.png')
+  image = sitePath('/brand/og-lulab.png')
 } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const socialImage = new URL(image, Astro.site)
@@ -22,23 +22,29 @@ const socialImage = new URL(image, Astro.site)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#F6F4EF" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={sitePath('/assets/favicon.svg')} />
+    <link rel="icon" href={sitePath('/favicon-32x32.png')} type="image/png" sizes="32x32" />
+    <link rel="icon" href={sitePath('/favicon-16x16.png')} type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href={sitePath('/apple-touch-icon.png')} sizes="180x180" />
+    <link rel="manifest" href={sitePath('/site.webmanifest')} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Marchio geometrico LuLab" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={socialImage} />
     <title>{title}</title>
   </head>
   <body id="top">
     <header class="site-header">
       <a class="brand" href={sitePath('/')} aria-label="LuLab — home">
-        <img src={sitePath('/assets/logo.png')} width="64" height="64" alt="" />
+        <img src={sitePath('/brand/logo-lulab.png')} width="64" height="64" alt="" />
         <span>LuLab</span>
       </a>
       <nav class="site-nav" aria-label="Navigazione principale">
@@ -50,7 +56,10 @@ const socialImage = new URL(image, Astro.site)
     </header>
     <main><slot /></main>
     <footer class="site-footer">
-      <div><strong>LuLab</strong><p>Restauro, recupero e lavorazioni artigianali nel Salento.</p></div>
+      <div class="footer-brand-lockup">
+        <img src={sitePath('/brand/logo-lulab.png')} width="64" height="64" alt="" loading="lazy" />
+        <div><strong>LuLab</strong><p>Restauro, recupero e lavorazioni artigianali nel Salento.</p></div>
+      </div>
       <div class="footer-links">
         <a href="mailto:lulabworks@gmail.com">lulabworks@gmail.com</a>
         <a href="https://www.instagram.com/lulabworks/" target="_blank" rel="noopener noreferrer">Instagram</a>
