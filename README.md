@@ -23,4 +23,4 @@ Il workflow `.github/workflows/deploy-pages.yml` esegue check, test e build e pu
 
 Il modulo richieste invia dati e allegati alla Edge Function Supabase `submit-inquiry`: nessun inserimento anonimo diretto è consentito dalle tabelle o dallo Storage.
 
-Il marchio ufficiale è conservato in `public/brand/logo-lulab.png`; favicon, Apple Touch Icon, icone del manifest e immagine Open Graph sono generate a partire da questo file.
+Il marchio ufficiale è conservato in `public/brand/logo-lulab.png`; favicon, Apple Touch Icon, icona del manifest e immagine Open Graph usano direttamente lo stesso PNG originale, con URL versionati per invalidare le cache.
