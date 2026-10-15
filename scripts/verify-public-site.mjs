@@ -22,7 +22,7 @@ assert(/functions\/v1\/submit-inquiry/.test(form), 'Il modulo deve passare dalla
 assert(/name="website"/.test(form) && /form_started_at/.test(form), 'Mancano le protezioni antispam di base.')
 assert(/schedule:/.test(workflow) && /cron:/.test(workflow), 'Manca la rigenerazione automatica pianificata.')
 assert(/base: '\/lulabworks'/.test(astroConfig) && /sitePath/.test(publicContent), 'Manca il base path GitHub Pages del repository pubblico.')
-assert((baseLayout.match(/<link\s+rel="icon"/g) ?? []).length === 1, 'Deve esserci una sola dichiarazione rel="icon".')
+assert((baseLayout.match(/<link\s+rel="icon"/g) ?? []).length === 3, 'Devono esserci tre favicon distinte da 16, 32 e 48 px.')
 assert(/rel="icon" href=\{brandIcon\}/.test(baseLayout) && /rel="apple-touch-icon" href=\{appleTouchIcon\}/.test(baseLayout), 'Mancano le icone browser e Apple condivise.')
 const original = readFileSync(new URL('../public/brand/logo-lulab.png', import.meta.url))
 const originalHash = createHash('sha256').update(original).digest('hex')
@@ -39,7 +39,7 @@ function verifyPng(url, size) {
   assert(png.readUInt32BE(16) === size && png.readUInt32BE(20) === size, `Dimensioni PNG errate: ${url.pathname}`)
   assert(url.href.includes(version), `URL del marchio non versionato: ${url.pathname}`)
 }
-for (const [name, size] of [['brandLogo', 4167], ['brandIcon', 32], ['appleTouchIcon', 180]]) {
+for (const [name, size] of [['brandLogo', 4167], ['brandIcon16', 16], ['brandIcon', 32], ['brandIcon48', 48], ['appleTouchIcon', 180]]) {
   const path = baseLayout.match(new RegExp(`const ${name} = sitePath\\('([^']+)'\\)`))?.[1]
   assert(path, `Manca il percorso condiviso ${name}.`)
   verifyPng(new URL(`.${path}`, siteUrl), size)

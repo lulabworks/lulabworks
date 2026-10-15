@@ -9,8 +9,10 @@ interface Props {
 }
 
 const brandLogo = sitePath('/brand/logo-lulab.png?v=a0ea8c0457f2')
-const brandIcon = sitePath('/brand/favicon-a0ea8c0457f2-32.png')
-const appleTouchIcon = sitePath('/brand/apple-touch-icon-a0ea8c0457f2-180.png')
+const brandIcon16 = sitePath('/brand/favicon-a0ea8c0457f2-c83-16.png')
+const brandIcon = sitePath('/brand/favicon-a0ea8c0457f2-c83-32.png')
+const brandIcon48 = sitePath('/brand/favicon-a0ea8c0457f2-c83-48.png')
+const appleTouchIcon = sitePath('/brand/apple-touch-icon-a0ea8c0457f2-c83-180.png')
 
 const {
   title = 'LuLab | Restauro, recupero e lavori artigianali nel Salento',
@@ -30,9 +32,11 @@ const socialImage = new URL(image, Astro.site)
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F6F4EF" />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href={brandIcon16} type="image/png" sizes="16x16" />
     <link rel="icon" href={brandIcon} type="image/png" sizes="32x32" />
+    <link rel="icon" href={brandIcon48} type="image/png" sizes="48x48" />
     <link rel="apple-touch-icon" href={appleTouchIcon} sizes="180x180" />
-    <link rel="manifest" href={sitePath('/site-a0ea8c0457f2.webmanifest')} />
+    <link rel="manifest" href={sitePath('/site-a0ea8c0457f2-c83.webmanifest')} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
