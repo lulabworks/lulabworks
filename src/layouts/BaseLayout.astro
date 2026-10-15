@@ -8,14 +8,17 @@ interface Props {
   image?: string
 }
 
+const brandLogo = sitePath('/brand/logo-lulab.png?v=a0ea8c0457f2')
+const brandIcon = sitePath('/brand/favicon-a0ea8c0457f2-32.png')
+const appleTouchIcon = sitePath('/brand/apple-touch-icon-a0ea8c0457f2-180.png')
+
 const {
   title = 'LuLab | Restauro, recupero e lavori artigianali nel Salento',
   description = 'LuLab restaura mobili e infissi, recupera arredi e realizza trattamenti antitarlo nel Salento.',
-  image = sitePath('/brand/logo-lulab.png?v=20261015')
+  image = brandLogo
 } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const socialImage = new URL(image, Astro.site)
-const brandIcon = sitePath('/brand/logo-lulab.png?v=20261015')
 ---
 
 <!doctype html>
@@ -27,9 +30,9 @@ const brandIcon = sitePath('/brand/logo-lulab.png?v=20261015')
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F6F4EF" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={brandIcon} type="image/png" sizes="1024x1024" />
-    <link rel="apple-touch-icon" href={brandIcon} sizes="1024x1024" />
-    <link rel="manifest" href={sitePath('/site.webmanifest')} />
+    <link rel="icon" href={brandIcon} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={appleTouchIcon} sizes="180x180" />
+    <link rel="manifest" href={sitePath('/site-a0ea8c0457f2.webmanifest')} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
@@ -44,7 +47,7 @@ const brandIcon = sitePath('/brand/logo-lulab.png?v=20261015')
   <body id="top">
     <header class="site-header">
       <a class="brand" href={sitePath('/')} aria-label="LuLab — home">
-        <img src={sitePath('/brand/logo-lulab.png')} width="64" height="64" alt="" />
+        <img src={brandLogo} width="64" height="64" alt="" />
         <span>LuLab</span>
       </a>
       <button
@@ -71,7 +74,7 @@ const brandIcon = sitePath('/brand/logo-lulab.png?v=20261015')
     <main><slot /></main>
     <footer class="site-footer">
       <div class="footer-brand-lockup">
-        <img src={sitePath('/brand/logo-lulab.png')} width="64" height="64" alt="" loading="lazy" />
+        <img src={brandLogo} width="64" height="64" alt="" loading="lazy" />
         <div><strong>LuLab</strong><p>Restauro, recupero e lavorazioni artigianali nel Salento.</p></div>
       </div>
       <div class="footer-links">

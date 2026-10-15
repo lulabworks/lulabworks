@@ -1,11 +1,12 @@
 import { readFileSync, readdirSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 
 const publicContent = readFileSync(new URL('../src/lib/public-content.ts', import.meta.url), 'utf8')
 const form = readFileSync(new URL('../src/pages/richiesta/index.astro', import.meta.url), 'utf8')
 const workflow = readFileSync(new URL('../.github/workflows/deploy-pages.yml', import.meta.url), 'utf8')
 const astroConfig = readFileSync(new URL('../astro.config.mjs', import.meta.url), 'utf8')
 const baseLayout = readFileSync(new URL('../src/layouts/BaseLayout.astro', import.meta.url), 'utf8')
-const webManifest = JSON.parse(readFileSync(new URL('../public/site.webmanifest', import.meta.url), 'utf8'))
+const manifestPath = baseLayout.match(/sitePath\('([^']+\.webmanifest)'\)/)?.[1]
 const pageFiles = readdirSync(new URL('../src/pages', import.meta.url), { recursive: true }).filter((path) => path.endsWith('.astro'))
 
 function assert(condition, message) {
@@ -22,9 +23,38 @@ assert(/name="website"/.test(form) && /form_started_at/.test(form), 'Mancano le 
 assert(/schedule:/.test(workflow) && /cron:/.test(workflow), 'Manca la rigenerazione automatica pianificata.')
 assert(/base: '\/lulabworks'/.test(astroConfig) && /sitePath/.test(publicContent), 'Manca il base path GitHub Pages del repository pubblico.')
 assert((baseLayout.match(/<link\s+rel="icon"/g) ?? []).length === 1, 'Deve esserci una sola dichiarazione rel="icon".')
-assert(/rel="icon" href=\{brandIcon\}/.test(baseLayout) && /rel="apple-touch-icon" href=\{brandIcon\}/.test(baseLayout), 'Le icone browser e Apple devono usare il PNG ufficiale.')
-assert(/logo-lulab\.png\?v=20261015/.test(baseLayout) && /image = sitePath\('\/brand\/logo-lulab\.png\?v=20261015'\)/.test(baseLayout), 'Icona e Open Graph predefinita devono usare il PNG versionato.')
-assert(webManifest.icons.length === 1 && webManifest.icons[0].src === 'brand/logo-lulab.png?v=20261015' && webManifest.icons[0].sizes === '1024x1024', 'Il manifest deve usare il PNG ufficiale e le dimensioni reali.')
+assert(/rel="icon" href=\{brandIcon\}/.test(baseLayout) && /rel="apple-touch-icon" href=\{appleTouchIcon\}/.test(baseLayout), 'Mancano le icone browser e Apple condivise.')
+const original = readFileSync(new URL('../public/brand/logo-lulab.png', import.meta.url))
+const originalHash = createHash('sha256').update(original).digest('hex')
+assert(originalHash === 'a0ea8c0457f26a26aa8b68b6711bbda32047de22a72856284ecb2a49653108e4', 'Il logo deve essere esattamente il PNG originale autorizzato.')
+const version = originalHash.slice(0, 12)
+const siteUrl = new URL('https://lulabworks.github.io/lulabworks/')
+function publicFile(url) {
+  assert(url.pathname.startsWith(siteUrl.pathname), `Asset fuori dal base path: ${url.pathname}`)
+  return readFileSync(new URL(`../public/${url.pathname.slice(siteUrl.pathname.length)}`, import.meta.url))
+}
+function verifyPng(url, size) {
+  const png = publicFile(url)
+  assert(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `Asset non PNG: ${url.pathname}`)
+  assert(png.readUInt32BE(16) === size && png.readUInt32BE(20) === size, `Dimensioni PNG errate: ${url.pathname}`)
+  assert(url.href.includes(version), `URL del marchio non versionato: ${url.pathname}`)
+}
+for (const [name, size] of [['brandLogo', 4167], ['brandIcon', 32], ['appleTouchIcon', 180]]) {
+  const path = baseLayout.match(new RegExp(`const ${name} = sitePath\\('([^']+)'\\)`))?.[1]
+  assert(path, `Manca il percorso condiviso ${name}.`)
+  verifyPng(new URL(`.${path}`, siteUrl), size)
+}
+assert(/image = brandLogo/.test(baseLayout) && (baseLayout.match(/src=\{brandLogo\}/g) ?? []).length === 2, 'Header, footer e Open Graph devono condividere il logo originale.')
+assert(manifestPath?.includes(version), 'Anche il manifest deve avere un nuovo URL versionato.')
+const manifestUrl = new URL(`.${manifestPath}`, siteUrl)
+const webManifest = JSON.parse(publicFile(manifestUrl).toString('utf8'))
+assert(new URL(webManifest.scope, manifestUrl).pathname === siteUrl.pathname && new URL(webManifest.start_url, manifestUrl).pathname === siteUrl.pathname, 'Scope o start_url del manifest fuori dal base path.')
+assert(webManifest.icons.length === 2, 'Mancano le icone del manifest da 192 e 512 px.')
+for (const size of [192, 512]) {
+  const icon = webManifest.icons.find((icon) => icon.sizes === `${size}x${size}`)
+  assert(icon?.type === 'image/png', `Manca l’icona PNG del manifest da ${size} px.`)
+  verifyPng(new URL(icon.src, manifestUrl), size)
+}
 assert(pageFiles.every((path) => {
   const page = readFileSync(new URL(`../src/pages/${path}`, import.meta.url), 'utf8')
   return page.includes('BaseLayout') && !/<link\s+rel=["'](?:icon|apple-touch-icon)/.test(page)
@@ -35,5 +65,5 @@ console.log('Contenuti e immagini filtrati per pubblicazione: OK')
 console.log('Richieste instradate alla Edge Function: OK')
 console.log('Rigenerazione automatica pianificata: OK')
 console.log('Base path GitHub Pages /lulabworks/: OK')
-console.log('Icone, manifest e Open Graph condividono il PNG ufficiale: OK')
+console.log('PNG originale, dimensioni e percorsi versionati delle icone: OK')
 console.log('Tutte le pagine usano BaseLayout senza favicon duplicate: OK')
